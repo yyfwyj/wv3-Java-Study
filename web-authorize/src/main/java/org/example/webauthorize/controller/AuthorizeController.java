@@ -2,8 +2,10 @@ package org.example.webauthorize.controller;
 
 import org.example.webauthorize.service.AuthorizeService;
 import org.example.webpojo.admin.dto.AdminUserDTO;
+import org.example.webpojo.admin.dto.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @RestController
@@ -19,12 +21,13 @@ public class AuthorizeController {
      * @return String
      */
     @PostMapping("/login")
-    public String adminLogin(@RequestBody AdminUserDTO adminLoginInfo) {
-
-
-
+    public Result adminLogin(@RequestBody AdminUserDTO adminLoginInfo) {
         String loginInfo = authorizeService.adminLogin(adminLoginInfo);
-        System.out.println(loginInfo);
-        return loginInfo;
+        return Result.success(loginInfo);
+    }
+
+    @PostMapping("/register")
+    public Result<AdminUserDTO> adminRegister(@RequestBody AdminUserDTO registerInfo) {
+        return authorizeService.adminRegister(registerInfo);
     }
 }
